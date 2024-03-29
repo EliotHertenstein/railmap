@@ -1,11 +1,9 @@
 import TrainElement from './elements/amtrak/TrainElement'
-import { TrainResponse } from '../../types/amtraker'
-import { station, trainData } from '../../types/amtraker'
-import moment from 'dayjs'
+import { TrainResponse, Station, StationMeta, Train } from '../../types/amtraker'
 import { useCallback, useEffect, useState } from 'react'
-import { MapRef, useMap } from 'react-map-gl'
+import { MapRef } from 'react-map-gl'
 
-interface StationData {
+interface StationDetails {
   id?: number
   city2?: string
   objectid?: number
@@ -17,82 +15,85 @@ interface StationData {
   mapboxLayerId?: 'amtrak'
 }
 
-interface AmtrakStationSidebarContentProps {
-  /** Array of style options */
-  stationData: StationData
-  onTrainClick: (train: trainData, railmap: MapRef) => void
+interface StationTrain {
+  train: Train
+  station: Station
 }
 
-interface stationTrain extends station {
-  train: trainData
+interface AmtrakStationSidebarContentProps {
+  /** Array of style options */
+  readonly stationData: StationDetails
+  readonly onTrainClick: (train: Train, railmap: MapRef) => void
 }
 
 const AmtrakStationSidebarContent = (props: AmtrakStationSidebarContentProps) => {
   const { stationData, onTrainClick } = props
 
-  const [stationTrains, setStationTrains] = useState([] as stationTrain[])
+  const [station, setStation] = useState<StationMeta | null>(null)
+  const [stationTrains, setStationTrains] = useState([] as StationTrain[])
 
   // set the station trains to an API call
   const getStationTrains = useCallback(async () => {
     const response = await fetch(`https://api-v3.amtraker.com/v3/trains`)
     const trainNums: TrainResponse = await response.json()
-    console.log(stationData)
-    const trains: stationTrain[] = []
+
+    const trains: StationTrain[] = []
     for (const trainNum in trainNums) {
-      trainNums[trainNum].forEach((train: trainData) => {
-        train.stations.forEach((station: station) => {
+      trainNums[trainNum].forEach((train: Train) => {
+        train.stations.forEach((station: Station) => {
           if (
             station.code === stationData['stncode'] &&
             station.status.toLowerCase() === 'enroute'
           ) {
             trains.push({
-              ...station,
               train: train,
-            } as stationTrain)
+              station: station,
+            })
           }
         })
       })
     }
 
-    console.log('trains', trains)
-
-    // order stations by closest estArr
     trains.sort((a, b) => {
-      return moment(a.train.estArr).diff(moment(b.train.estArr))
+      return new Date(a.station.arr).getTime() - new Date(b.station.arr).getTime()
     })
     setStationTrains(trains)
   }, [stationData])
 
+  const getStation = useCallback(async () => {
+    const response = await fetch(
+      `https://api-v3.amtraker.com/v3/stations/${stationData['stncode']}`,
+    )
+    const responseJSON = await response.json()
+    const station = responseJSON[Object.keys(responseJSON)[0]] as StationMeta
+    setStation(station)
+  }, [stationData])
+
   useEffect(() => {
     getStationTrains()
-  }, [getStationTrains])
+    getStation()
+  }, [getStationTrains, getStation])
 
-  return (
-    <div className="flex h-full w-full flex-shrink-0 flex-col items-center rounded-t-md bg-white md:rounded-md">
-      <div className="w-full px-2 py-4 text-center text-2xl">
-        {stationData['stnname'] ?? 'Unknown Station'}
-      </div>
-      <div className="flex w-full max-w-md flex-[1] flex-col overflow-y-scroll px-2">
-        <div className="bg-white p-3">
-          <ul className="children:mb-4 w-full">
-            {stationTrains.length > 0 ? (
-              stationTrains.map((train) => (
-                <TrainElement
-                  key={train.train.trainNum}
-                  onTrainClick={onTrainClick}
-                  train={train}
-                />
-              ))
-            ) : (
-              <li className="hover:bg-coolGray-100 relative flex h-full w-full items-center justify-center rounded-md p-3">
-                <h3 className="text-sm font-medium leading-5">No Trains Available</h3>
-              </li>
-            )}
-          </ul>
+  return station ? (
+    <div className="flex h-full w-full flex-shrink-0 flex-col space-y-2 overflow-y-auto scroll-smooth rounded-t-md bg-white  md:rounded-md">
+      <div className="sticky top-0 flex w-full flex-row justify-start space-x-2 border-b bg-white p-2">
+        <div className="flex flex-col space-y-1">
+          <div className="w-full text-left text-xs  capitalize text-neutral-400">
+            {station.name ?? 'Unknown Station'}
+          </div>
+          <div className="w-full text-left text-2xl font-bold">{station.code ?? '???'}</div>
         </div>
       </div>
+      {stationTrains.map((train) => (
+        <TrainElement
+          key={train.train.objectID}
+          onTrainClick={onTrainClick}
+          station={train.station}
+          train={train.train}
+        />
+      ))}
     </div>
-  )
+  ) : null
 }
 
 export default AmtrakStationSidebarContent

@@ -1,12 +1,11 @@
 import { Station } from '../../../../types/amtraker'
-import TimeDifferenceRing from '../../../TimeDifferenceRing'
 import { cmntGenerator, diffGenerator } from '../../AmtrakSidebarContent'
 import clsx from 'clsx'
 import dayjs from 'dayjs'
 
 interface StationElementProps {
-  station: Station
-  nextStation: Station | null
+  readonly station: Station
+  readonly nextStation: Station | null
 }
 
 const durGenerator = (start: string, end: string) => {
@@ -29,13 +28,12 @@ const StationElement = (props: StationElementProps) => {
       ? cmntGenerator(station.schDep, station.dep)
       : cmntGenerator(station.schArr, station.arr)
 
+  const departed = station.status === 'Departed'
+
   return (
     <>
       <div
-        className={clsx(
-          'flex w-full flex-row space-x-2',
-          station.status === 'Departed' && 'text-neutral-400',
-        )}
+        className={clsx('flex w-full flex-row space-x-2', station.status === 'Departed' && '')}
         id={station.code}
       >
         <div className="flex flex-1 flex-col">
@@ -59,7 +57,7 @@ const StationElement = (props: StationElementProps) => {
                   }[station.status]}
             </span>
           </div>
-          <div className="flex flex-row space-x-2 text-xs">
+          <div className="flex flex-row space-x-2 text-xs text-neutral-400">
             <span className="mr-auto overflow-hidden text-ellipsis whitespace-nowrap">
               {station.name}
             </span>
@@ -82,7 +80,7 @@ const StationElement = (props: StationElementProps) => {
             )}
           </div>
           <div className="flex flex-row space-x-2 text-xs">
-            <span className="mr-auto font-semibold">
+            <span className="mr-auto">
               {station.arr && station.dep ? station.status : 'Scheduled'}
             </span>
             <span>
@@ -105,13 +103,13 @@ const StationElement = (props: StationElementProps) => {
       </div>
       {nextStation ? (
         <div className="flex w-full flex-row items-center space-x-2 font-light">
-          <div className="h-[1px] flex-1 bg-neutral-700" />
-          <span className="text-[10px] text-neutral-400">
+          <div className="h-[1px] flex-1 bg-neutral-200" />
+          <span className="text-[10px] text-neutral-600">
             {station.dep && nextStation.arr
               ? `Total ${durGenerator(station.dep, nextStation.arr)}`
               : `Scheduled ${durGenerator(station.schDep, nextStation.schArr)}`}
           </span>
-          <div className="h-[1px] flex-1 bg-neutral-700" />
+          <div className="h-[1px] flex-1 bg-neutral-200" />
         </div>
       ) : null}
     </>

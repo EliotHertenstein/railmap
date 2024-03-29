@@ -1,15 +1,15 @@
+import StationElement from './elements/amtrak/StationElement'
+import { Station, Train } from '../../types/amtraker'
+import clsx from 'clsx'
 import moment from 'dayjs'
 import duration from 'dayjs/plugin/duration'
 import { Navigation2, PauseCircle, PlayCircle, StopCircle } from 'react-feather'
-import { Station, Train } from '../../types/amtraker'
-import clsx from 'clsx'
-import StationElement from './elements/amtrak/StationElement'
 
 moment.extend(duration)
 
 interface TrainSidebarContentProps {
   /** Array of style options */
-  trainData: Train
+  readonly trainData: Train
 }
 
 const headingToDegrees = (heading: 'N' | 'NE' | 'E' | 'SE' | 'S' | 'SW' | 'W' | 'NW') => {
@@ -37,6 +37,7 @@ export const cmntGenerator = (
   sch: string,
   act: string,
 ): {
+  status: 'early' | 'late' | 'onTime'
   diff: number
   text: string
   color: string
@@ -47,6 +48,7 @@ export const cmntGenerator = (
 
   if (diff.asMinutes() === 0) {
     return {
+      status: 'onTime',
       diff: diff.asMinutes(),
       text: 'On Time',
       color: 'text-green-500',
@@ -54,6 +56,7 @@ export const cmntGenerator = (
   } else if (diff.asMinutes() < 0) {
     if (diff.asMinutes() <= -60) {
       return {
+        status: 'early',
         diff: diff.asMinutes(),
         text: `${Math.abs(diff.hours())}h ${Math.abs(diff.minutes())}m early`,
         color: 'text-green-500',
@@ -61,6 +64,7 @@ export const cmntGenerator = (
     }
 
     return {
+      status: 'early',
       diff: diff.asMinutes(),
       text: `${Math.abs(diff.minutes())}m early`,
       color: 'text-green-500',
@@ -68,6 +72,7 @@ export const cmntGenerator = (
   } else {
     if (diff.asMinutes() >= 60) {
       return {
+        status: 'late',
         diff: diff.asMinutes(),
         text: `${diff.hours()}h ${diff.minutes()}m late`,
         color: 'text-red-500',
@@ -75,6 +80,7 @@ export const cmntGenerator = (
     }
 
     return {
+      status: 'late',
       diff: diff.asMinutes(),
       text: `${diff.minutes()}m late`,
       color: 'text-red-500',
@@ -112,7 +118,7 @@ const AmtrakSidebarContent = (props: TrainSidebarContentProps) => {
   const nextStationCMNT = cmntGenerator(nextStation.schArr, nextStation.arr)
 
   return (
-    <div className="flex h-full w-full flex-shrink-0 flex-col space-y-2 overflow-y-auto scroll-smooth rounded-t-md bg-neutral-900 text-white md:rounded-md">
+    <div className="flex h-full w-full flex-shrink-0 flex-col space-y-2 overflow-y-auto scroll-smooth rounded-t-md bg-white md:rounded-md">
       <div className="flex w-full flex-row justify-start space-x-2 p-2">
         <div className="flex aspect-square items-center justify-center">
           <Navigation2
@@ -124,63 +130,80 @@ const AmtrakSidebarContent = (props: TrainSidebarContentProps) => {
           />
         </div>
         <div className="flex flex-col space-y-1">
-          <div className="w-full text-left text-xs font-semibold capitalize text-neutral-400">
+          <div className="w-full text-left text-xs  capitalize text-neutral-400">
             {moment(trainData.stations[0].schDep).format('ddd, D MMM')}
           </div>
-          <div className="w-full text-left text-sm font-bold">
+          <div className="w-full text-left text-sm ">
             {trainData.trainNum} {trainData.routeName}
           </div>
         </div>
       </div>
       <a
-        href={`#${nextStation.code}`}
         className={clsx(
-          'flex w-full flex-row justify-between px-2 py-3 text-sm',
+          'sticky top-0 flex w-full flex-row justify-between border-y px-2 py-3 text-sm',
           nextStationCMNT.color === 'text-green-500'
-            ? 'bg-[#052e16] text-green-500'
-            : 'bg-[#450a0a] text-red-500',
+            ? 'bg-green-100 text-green-600'
+            : 'bg-red-100 text-red-600',
         )}
+        href={`#${nextStation.code}`}
       >
         <span className="font-semibold">
           {nextStation.name} {diffGenerator(nextStation.arr)}
         </span>
-        <span>{nextStationCMNT.text}</span>
+        <span className="">{nextStationCMNT.text}</span>
       </a>
       <div className="flex flex-row space-x-2 px-2">
         <div className="mt-[7px] flex flex-col items-center">
-          {stations.map((station, index) => (
-            <>
-              {index == 0 ? (
-                <PlayCircle
-                  size={18}
-                  fill={station.status === 'Departed' ? 'rgb(163 163 163)' : '#fff'}
-                  stroke="rgb(23 23 23)"
-                />
-              ) : index !== stations.length - 1 ? (
-                <PauseCircle
-                  size={18}
-                  fill={station.status === 'Departed' ? 'rgb(163 163 163)' : '#fff'}
-                  stroke="rgb(23 23 23)"
-                />
-              ) : (
-                <StopCircle
-                  size={18}
-                  fill={station.status === 'Departed' ? 'rgb(163 163 163)' : '#fff'}
-                  stroke="rgb(23 23 23)"
-                />
-              )}
-              {index !== stations.length - 1 && (
-                <div className="h-[93px] w-[1px] bg-neutral-700"></div>
-              )}
-            </>
-          ))}
+          {stations.map((station, index) => {
+            const cmnt =
+              station.status === 'Departed' || station.status === 'Station'
+                ? cmntGenerator(station.schDep, station.dep)
+                : cmntGenerator(station.schArr, station.arr)
+
+            return (
+              <>
+                {index == 0 ? (
+                  <PlayCircle
+                    className={clsx(
+                      'statuscircle',
+                      (cmnt.status === 'early' || cmnt.status === 'onTime') && 'statusCircleOnTime',
+                      cmnt.status === 'late' && 'statusCircleDelayed',
+                    )}
+                    fill="#fff"
+                    size={18}
+                  />
+                ) : index !== stations.length - 1 ? (
+                  <PauseCircle
+                    className={clsx(
+                      'statuscircle',
+                      (cmnt.status === 'early' || cmnt.status === 'onTime') && 'statusCircleOnTime',
+                      cmnt.status === 'late' && 'statusCircleDelayed',
+                    )}
+                    size={18}
+                  />
+                ) : (
+                  <StopCircle
+                    className={clsx(
+                      'statuscircle',
+                      (cmnt.status === 'early' || cmnt.status === 'onTime') && 'statusCircleOnTime',
+                      cmnt.status === 'late' && 'statusCircleDelayed',
+                    )}
+                    size={18}
+                  />
+                )}
+                {index !== stations.length - 1 && (
+                  <div className="h-[93px] w-[1px] bg-neutral-200" />
+                )}
+              </>
+            )
+          })}
         </div>
         <div className="flex flex-1 flex-col space-y-4">
           {stations.map((station, index) => (
             <StationElement
-              station={station}
-              nextStation={stations[index + 1]}
               key={station.code}
+              nextStation={stations[index + 1]}
+              station={station}
             />
           ))}
         </div>

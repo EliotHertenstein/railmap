@@ -5,13 +5,13 @@ import StylesControl from '../components/map/StylesControl'
 import TerrainControl from '../components/map/TerrainControl'
 import MapboxMap from '../components/mapbox'
 import Sidebar from '../components/sidebar'
+import { TrainResponse } from '../types/amtraker'
 import { Feature, FeatureCollection } from 'geojson'
 import { MapboxStyleDefinition } from 'mapbox-gl-style-switcher'
 import { useCallback, useState } from 'react'
 import toast from 'react-hot-toast'
 import { Layer, LngLatBoundsLike, MapLayerMouseEvent, Source } from 'react-map-gl'
 import type { NextPage } from 'next'
-import { TrainResponse } from '../types/amtraker'
 
 async function getAmtrak() {
   // Make a GET request to the API and return the location of the trains.

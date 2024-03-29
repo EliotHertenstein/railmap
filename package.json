@@ -29,7 +29,9 @@
     "react-feather": "^2.0.10",
     "react-hot-toast": "^2.4.0",
     "react-map-gl": "^7.0.10",
-    "tailwindcss-children": "^2.1.0"
+    "sass": "^1.72.0",
+    "tailwindcss-children": "^2.1.0",
+    "vaul": "^0.9.0"
   },
   "devDependencies": {
     "@types/node": "17.0.4",
