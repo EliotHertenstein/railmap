@@ -12,7 +12,7 @@ module.exports = {
   ],
   rules: {
     'react/jsx-sort-props': 'error',
-    'you-dont-need-momentjs': 'warning',
+    'you-dont-need-momentjs': 'warn',
     'react/jsx-filename-extension': ['error', { extensions: ['.js', '.jsx', '.ts', '.tsx'] }],
     'react/jsx-max-depth': 'off',
     'react/jsx-no-literals': 'off',

@@ -89,8 +89,6 @@ export const cmntGenerator = (
 }
 
 export const diffGenerator = (time: string) => {
-  // output either "in 5m" or "5m ago" or "in 1h 3m", etc. based on the time passed in minutes and hours
-
   const diff = moment.duration(moment(time).diff(moment()))
 
   if (diff.asMinutes() < 0) {
