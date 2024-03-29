@@ -7,121 +7,117 @@ import Map, { FullscreenControl, GeolocateControl, NavigationControl } from 'rea
 // This is a terrible solution to this problem, but I just can't figure out how to get the type definitions for the Map component
 
 interface MapTypes {
-  mapboxAccessToken?: string
-  initialViewState?: Partial<import('react-map-gl/dist/esm/index').ViewState> & {
+  readonly mapboxAccessToken?: string
+  readonly initialViewState?: Partial<import('react-map-gl/dist/esm/index').ViewState> & {
     bounds?: import('mapbox-gl').LngLatBoundsLike
     fitBoundsOptioss?: import('mapbox-gl').FitBoundsOptions
   }
-  gl?: WebGLRenderingContext
-  antialias?: boolean
-  attributionControl?: boolean
-  bearingSnap?: number
-  clickTolerance?: number
-  collectResourceTiming?: boolean
-  cooperativeGestures?: boolean
-  crossSourceCollisions?: boolean
-  customAttribution?: string | string[]
-  fadeDuration?: number
-  failIfMajorPerformanceCaveat?: boolean
-  hash?: string | boolean
-  interactive?: boolean
-  locale?: {
+  readonly gl?: WebGLRenderingContext
+  readonly antialias?: boolean
+  readonly attributionControl?: boolean
+  readonly bearingSnap?: number
+  readonly clickTolerance?: number
+  readonly collectResourceTiming?: boolean
+  readonly cooperativeGestures?: boolean
+  readonly crossSourceCollisions?: boolean
+  readonly customAttribution?: string | string[]
+  readonly fadeDuration?: number
+  readonly failIfMajorPerformanceCaveat?: boolean
+  readonly hash?: string | boolean
+  readonly interactive?: boolean
+  readonly locale?: {
     [key: string]: string
   }
-  localFontFamily?: string
-  localIdeographFontFamily?: string
-  logoPosition?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
-  maxTileCacheSize?: number
-  optimizeForTerrain?: boolean
-  pitchWithRotate?: boolean
-  preserveDrawingBuffer?: boolean
-  refreshExpiredTiles?: boolean
-  testMode?: boolean
-  trackResize?: boolean
-  transformRequest?: import('mapbox-gl').TransformRequestFunction
-  boxZoom?: boolean
-  doubleClickZoom?: boolean
-  dragPan?: boolean | import('mapbox-gl').DragPanOptions
-  dragRotate?: boolean
-  keyboard?: boolean
-  scrollZoom?: boolean | import('mapbox-gl').InteractiveOptions
-  touchPitch?: boolean
-  touchZoomRotate?: boolean | import('mapbox-gl').InteractiveOptions
-  maxBounds?: import('mapbox-gl').LngLatBoundsLike
-  maxPitch?: number
-  maxZoom?: number
-  minPitch?: number
-  minZoom?: number
-  viewState?: import('react-map-gl/dist/esm/index').ViewState & {
+  readonly localFontFamily?: string
+  readonly localIdeographFontFamily?: string
+  readonly logoPosition?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right'
+  readonly maxTileCacheSize?: number
+  readonly optimizeForTerrain?: boolean
+  readonly pitchWithRotate?: boolean
+  readonly preserveDrawingBuffer?: boolean
+  readonly refreshExpiredTiles?: boolean
+  readonly testMode?: boolean
+  readonly trackResize?: boolean
+  readonly transformRequest?: import('mapbox-gl').TransformRequestFunction
+  readonly boxZoom?: boolean
+  readonly doubleClickZoom?: boolean
+  readonly dragPan?: boolean | import('mapbox-gl').DragPanOptions
+  readonly dragRotate?: boolean
+  readonly keyboard?: boolean
+  readonly scrollZoom?: boolean | import('mapbox-gl').InteractiveOptions
+  readonly touchPitch?: boolean
+  readonly touchZoomRotate?: boolean | import('mapbox-gl').InteractiveOptions
+  readonly maxBounds?: import('mapbox-gl').LngLatBoundsLike
+  readonly maxPitch?: number
+  readonly maxZoom?: number
+  readonly minPitch?: number
+  readonly minZoom?: number
+  readonly viewState?: import('react-map-gl/dist/esm/index').ViewState & {
     width: number
     height: number
   }
-  mapStyle?:
-    | string
-    | import('mapbox-gl').Style
-    | import('react-map-gl/dist/esm/index').ImmutableLike
-  styleDiffing?: boolean
-  fog?: import('mapbox-gl').Fog
-  light?: import('mapbox-gl').Light
-  terrain?: import('mapbox-gl').TerrainSpecification
-  interactiveLayerIds?: string[]
-  projection?: string | import('react-map-gl/dist/esm/index').ProjectionSpecification
-  renderWorldCopies?: boolean
-  cursor?: string
-  onMouseDown?: (e: import('mapbox-gl').MapLayerMouseEvent) => void
-  onMouseUp?: (e: import('mapbox-gl').MapLayerMouseEvent) => void
-  onMouseOver?: (e: import('mapbox-gl').MapLayerMouseEvent) => void
-  onMouseMove?: (e: import('mapbox-gl').MapLayerMouseEvent) => void
-  onClick?: (e: import('mapbox-gl').MapLayerMouseEvent) => void
-  onDblClick?: (e: import('mapbox-gl').MapLayerMouseEvent) => void
-  onMouseEnter?: (e: import('mapbox-gl').MapLayerMouseEvent) => void
-  onMouseLeave?: (e: import('mapbox-gl').MapLayerMouseEvent) => void
-  onMouseOut?: (e: import('mapbox-gl').MapLayerMouseEvent) => void
-  onContextMenu?: (e: import('mapbox-gl').MapLayerMouseEvent) => void
-  onTouchStart?: (e: import('mapbox-gl').MapLayerTouchEvent) => void
-  onTouchEnd?: (e: import('mapbox-gl').MapLayerTouchEvent) => void
-  onTouchMove?: (e: import('mapbox-gl').MapLayerTouchEvent) => void
-  onTouchCancel?: (e: import('mapbox-gl').MapLayerTouchEvent) => void
-  onMoveStart?: (e: import('react-map-gl/dist/esm/index').ViewStateChangeEvent) => void
-  onMove?: (e: import('react-map-gl/dist/esm/index').ViewStateChangeEvent) => void
-  onMoveEnd?: (e: import('react-map-gl/dist/esm/index').ViewStateChangeEvent) => void
-  onDragStart?: (e: import('react-map-gl/dist/esm/index').ViewStateChangeEvent) => void
-  onDrag?: (e: import('react-map-gl/dist/esm/index').ViewStateChangeEvent) => void
-  onDragEnd?: (e: import('react-map-gl/dist/esm/index').ViewStateChangeEvent) => void
-  onZoomStart?: (e: import('react-map-gl/dist/esm/index').ViewStateChangeEvent) => void
-  onZoom?: (e: import('react-map-gl/dist/esm/index').ViewStateChangeEvent) => void
-  onZoomEnd?: (e: import('react-map-gl/dist/esm/index').ViewStateChangeEvent) => void
-  onRotateStart?: (e: import('react-map-gl/dist/esm/index').ViewStateChangeEvent) => void
-  onRotate?: (e: import('react-map-gl/dist/esm/index').ViewStateChangeEvent) => void
-  onRotateEnd?: (e: import('react-map-gl/dist/esm/index').ViewStateChangeEvent) => void
-  onPitchStart?: (e: import('react-map-gl/dist/esm/index').ViewStateChangeEvent) => void
-  onPitch?: (e: import('react-map-gl/dist/esm/index').ViewStateChangeEvent) => void
-  onPitchEnd?: (e: import('react-map-gl/dist/esm/index').ViewStateChangeEvent) => void
-  onWheel?: (e: import('mapbox-gl').MapWheelEvent) => void
-  onBoxZoomStart?: (e: import('mapbox-gl').MapBoxZoomEvent) => void
-  onBoxZoomEnd?: (e: import('mapbox-gl').MapBoxZoomEvent) => void
-  onBoxZoomCancel?: (e: import('mapbox-gl').MapBoxZoomEvent) => void
-  onResize?: (e: import('mapbox-gl').MapboxEvent<undefined>) => void
-  onLoad?: (e: import('mapbox-gl').MapboxEvent<undefined>) => void
-  onRender?: (e: import('mapbox-gl').MapboxEvent<undefined>) => void
-  onIdle?: (e: import('mapbox-gl').MapboxEvent<undefined>) => void
-  onError?: (e: import('mapbox-gl').ErrorEvent) => void
-  onRemove?: (e: import('mapbox-gl').MapboxEvent<undefined>) => void
-  onData?: (
+  readonly mapStyle?: string | import('mapbox-gl').Style
+  readonly styleDiffing?: boolean
+  readonly fog?: import('mapbox-gl').Fog
+  readonly light?: import('mapbox-gl').Light
+  readonly terrain?: import('mapbox-gl').TerrainSpecification
+  readonly interactiveLayerIds?: string[]
+  readonly renderWorldCopies?: boolean
+  readonly cursor?: string
+  readonly onMouseDown?: (e: import('mapbox-gl').MapLayerMouseEvent) => void
+  readonly onMouseUp?: (e: import('mapbox-gl').MapLayerMouseEvent) => void
+  readonly onMouseOver?: (e: import('mapbox-gl').MapLayerMouseEvent) => void
+  readonly onMouseMove?: (e: import('mapbox-gl').MapLayerMouseEvent) => void
+  readonly onClick?: (e: import('mapbox-gl').MapLayerMouseEvent) => void
+  readonly onDblClick?: (e: import('mapbox-gl').MapLayerMouseEvent) => void
+  readonly onMouseEnter?: (e: import('mapbox-gl').MapLayerMouseEvent) => void
+  readonly onMouseLeave?: (e: import('mapbox-gl').MapLayerMouseEvent) => void
+  readonly onMouseOut?: (e: import('mapbox-gl').MapLayerMouseEvent) => void
+  readonly onContextMenu?: (e: import('mapbox-gl').MapLayerMouseEvent) => void
+  readonly onTouchStart?: (e: import('mapbox-gl').MapLayerTouchEvent) => void
+  readonly onTouchEnd?: (e: import('mapbox-gl').MapLayerTouchEvent) => void
+  readonly onTouchMove?: (e: import('mapbox-gl').MapLayerTouchEvent) => void
+  readonly onTouchCancel?: (e: import('mapbox-gl').MapLayerTouchEvent) => void
+  readonly onMoveStart?: (e: import('react-map-gl/dist/esm/index').ViewStateChangeEvent) => void
+  readonly onMove?: (e: import('react-map-gl/dist/esm/index').ViewStateChangeEvent) => void
+  readonly onMoveEnd?: (e: import('react-map-gl/dist/esm/index').ViewStateChangeEvent) => void
+  readonly onDragStart?: (e: import('react-map-gl/dist/esm/index').ViewStateChangeEvent) => void
+  readonly onDrag?: (e: import('react-map-gl/dist/esm/index').ViewStateChangeEvent) => void
+  readonly onDragEnd?: (e: import('react-map-gl/dist/esm/index').ViewStateChangeEvent) => void
+  readonly onZoomStart?: (e: import('react-map-gl/dist/esm/index').ViewStateChangeEvent) => void
+  readonly onZoom?: (e: import('react-map-gl/dist/esm/index').ViewStateChangeEvent) => void
+  readonly onZoomEnd?: (e: import('react-map-gl/dist/esm/index').ViewStateChangeEvent) => void
+  readonly onRotateStart?: (e: import('react-map-gl/dist/esm/index').ViewStateChangeEvent) => void
+  readonly onRotate?: (e: import('react-map-gl/dist/esm/index').ViewStateChangeEvent) => void
+  readonly onRotateEnd?: (e: import('react-map-gl/dist/esm/index').ViewStateChangeEvent) => void
+  readonly onPitchStart?: (e: import('react-map-gl/dist/esm/index').ViewStateChangeEvent) => void
+  readonly onPitch?: (e: import('react-map-gl/dist/esm/index').ViewStateChangeEvent) => void
+  readonly onPitchEnd?: (e: import('react-map-gl/dist/esm/index').ViewStateChangeEvent) => void
+  readonly onWheel?: (e: import('mapbox-gl').MapWheelEvent) => void
+  readonly onBoxZoomStart?: (e: import('mapbox-gl').MapBoxZoomEvent) => void
+  readonly onBoxZoomEnd?: (e: import('mapbox-gl').MapBoxZoomEvent) => void
+  readonly onBoxZoomCancel?: (e: import('mapbox-gl').MapBoxZoomEvent) => void
+  readonly onResize?: (e: import('mapbox-gl').MapboxEvent<undefined>) => void
+  readonly onLoad?: (e: import('mapbox-gl').MapboxEvent<undefined>) => void
+  readonly onRender?: (e: import('mapbox-gl').MapboxEvent<undefined>) => void
+  readonly onIdle?: (e: import('mapbox-gl').MapboxEvent<undefined>) => void
+  readonly onError?: (e: import('mapbox-gl').ErrorEvent) => void
+  readonly onRemove?: (e: import('mapbox-gl').MapboxEvent<undefined>) => void
+  readonly onData?: (
     e: import('mapbox-gl').MapSourceDataEvent | import('mapbox-gl').MapStyleDataEvent,
   ) => void
-  onStyleData?: (e: import('mapbox-gl').MapStyleDataEvent) => void
-  onSourceData?: (e: import('mapbox-gl').MapSourceDataEvent) => void
+  readonly onStyleData?: (e: import('mapbox-gl').MapStyleDataEvent) => void
+  readonly onSourceData?: (e: import('mapbox-gl').MapSourceDataEvent) => void
 }
 
 interface OtherMapTypes {
-  mapLib?: any
-  reuseMaps?: boolean
+  readonly mapLib?: any
+  readonly reuseMaps?: boolean
   /** Map container id */
-  id?: string
+  readonly id?: string
   /** Map container CSS style */
-  style?: CSSProperties
-  children?: ReactNode
+  readonly style?: CSSProperties
+  readonly children?: ReactNode
 }
 
 interface CustomMapProps extends MapTypes, OtherMapTypes {

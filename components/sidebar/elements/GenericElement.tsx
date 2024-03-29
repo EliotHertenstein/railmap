@@ -1,9 +1,9 @@
 import isEmptyOrSpaces from '../../../helpers/isEmptyOrSpaces'
 
 interface GenericElementProps {
-  title: string
-  content?: string | number
-  ringColor?: string
+  readonly title: string
+  readonly content?: string | number
+  readonly ringColor?: string
 }
 
 const GenericElement = (props: GenericElementProps) => {

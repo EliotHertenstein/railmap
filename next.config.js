@@ -6,13 +6,6 @@ const withPwa = require('next-pwa')({
 })
 
 module.exports = withPwa({
-  typescript: {
-    // !! WARN !!
-    // Dangerously allow production builds to successfully complete even if
-    // your project has type errors.
-    // !! WARN !!
-    ignoreBuildErrors: true,
-  },
   reactStrictMode: true,
   async redirects() {
     return [

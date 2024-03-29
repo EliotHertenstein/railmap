@@ -7,7 +7,7 @@ import { USCrossingData } from '../MapDataTypes'
 
 interface CrossingSidebarContentProps {
   /** Array of style options */
-  crossingData: USCrossingData
+  readonly crossingData: USCrossingData
 }
 
 const reasonIdData = {

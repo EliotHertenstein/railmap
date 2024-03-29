@@ -3,9 +3,9 @@ import { useRouter } from 'next/router'
 import { ControlPosition, MapboxMap, useControl } from 'react-map-gl'
 
 interface LocationControlProps {
-  position?: ControlPosition
-  svg: string
-  onClick: (this: HTMLButtonElement, ev: MouseEvent) => void
+  readonly position?: ControlPosition
+  readonly svg: string
+  readonly onClick: (this: HTMLButtonElement, ev: MouseEvent) => void
   // locationIds: Array<string>
 }
 // set onClick using props.onClick

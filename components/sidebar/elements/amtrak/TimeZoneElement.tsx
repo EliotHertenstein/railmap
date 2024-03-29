@@ -1,5 +1,5 @@
 interface TimeZoneElementProps {
-  timeZone: string | null
+  readonly timeZone: string | null
 }
 
 const TimeZoneElement = (props: TimeZoneElementProps) => {

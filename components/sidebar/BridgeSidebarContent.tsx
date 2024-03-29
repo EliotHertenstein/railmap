@@ -3,7 +3,7 @@ import { USBridgeData } from '../MapDataTypes'
 
 interface BridgeSidebarContentProps {
   /** Array of style options */
-  bridgeData: USBridgeData
+  readonly bridgeData: USBridgeData
 }
 
 function capitalize(string: string) {

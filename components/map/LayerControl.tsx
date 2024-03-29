@@ -1,8 +1,8 @@
 import { ControlPosition, MapboxMap, useControl } from 'react-map-gl'
 
 interface LayerControlProps {
-  position?: ControlPosition
-  layerIds: Array<string>
+  readonly position?: ControlPosition
+  readonly layerIds: Array<string>
 }
 
 class LayerControl {

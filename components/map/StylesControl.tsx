@@ -2,8 +2,8 @@ import { MapboxStyleDefinition, MapboxStyleSwitcherControl } from 'mapbox-gl-sty
 import { ControlPosition, useControl } from 'react-map-gl'
 
 interface StylesControlProps {
-  styles: MapboxStyleDefinition[]
-  position?: ControlPosition
+  readonly styles: MapboxStyleDefinition[]
+  readonly position?: ControlPosition
 }
 
 /* eslint-disable complexity,max-statements */

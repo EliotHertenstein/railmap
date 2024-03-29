@@ -1,5 +1,5 @@
 interface SpeedElementProps {
-  velocity: number
+  readonly velocity: number
 }
 
 const SpeedElement = (props: SpeedElementProps) => {

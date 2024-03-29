@@ -1,7 +1,7 @@
 import { ControlPosition, MapboxMap, useControl } from 'react-map-gl'
 
 interface TerrainControlProps {
-  position?: ControlPosition
+  readonly position?: ControlPosition
 }
 
 class TerrainControl {

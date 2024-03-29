@@ -2,8 +2,8 @@ import { classNames } from '../helpers/tailwind/classNames'
 import moment from 'dayjs'
 
 interface TimeDifferenceRingProps {
-  start: string | null | undefined
-  end: string | null | undefined
+  readonly start: string | null | undefined
+  readonly end: string | null | undefined
 }
 const TimeDifferenceRing = (props: TimeDifferenceRingProps) => {
   const { start, end } = props

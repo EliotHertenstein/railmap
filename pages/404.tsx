@@ -8,7 +8,7 @@ const Custom404 = () => {
       <Head>
         <title>404</title>
       </Head>
-      <style jsx>{`
+      <style>{`
         .main {
           height: 100vh;
           display: flex;

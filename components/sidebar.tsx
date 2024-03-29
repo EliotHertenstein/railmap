@@ -1,4 +1,3 @@
-import { Train } from '../types/amtraker'
 import {
   CNCrossingData,
   FiveOneOneVehicleActivity,
@@ -11,24 +10,15 @@ import BridgeSidebarContent from './sidebar/BridgeSidebarContent'
 import CNCrossingSidebarContent from './sidebar/CNCrossingSidebarContent'
 import CrossingSidebarContent from './sidebar/CrossingSidebarContent'
 import OSMSidebarContent from './sidebar/OSMSidebarContent'
+import { Train } from '../types/amtraker'
 import classNames from 'clsx'
 import { motion, useAnimation } from 'framer-motion'
 import { useEffect, useRef, useState } from 'react'
 import { MapRef } from 'react-map-gl'
 
 interface SidebarProps {
-  mapboxFeatureData: { [key: string]: unknown } | null
-  onTrainClick?: (train: Train, railmap: MapRef) => void
-}
-
-const usePrevious = (value: any) => {
-  const previousValueRef = useRef()
-
-  useEffect(() => {
-    previousValueRef.current = value
-  }, [value])
-
-  return previousValueRef.current
+  readonly mapboxFeatureData: { [key: string]: unknown } | null
+  readonly onTrainClick?: (train: Train, railmap: MapRef) => void
 }
 
 const useMediaQuery = (query: any) => {

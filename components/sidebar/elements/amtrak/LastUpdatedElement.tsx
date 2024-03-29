@@ -7,7 +7,7 @@ moment.extend(duration)
 moment.extend(utc)
 
 interface LastUpdatedElementProps {
-  lastUpdated: string | null
+  readonly lastUpdated: string | null
 }
 
 const LastUpdatedElement = (props: LastUpdatedElementProps) => {

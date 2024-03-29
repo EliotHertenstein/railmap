@@ -3,7 +3,7 @@ import { CNCrossingData } from '../MapDataTypes'
 
 interface CNCrossingSidebarContentProps {
   /** Array of style options */
-  crossingData: CNCrossingData
+  readonly crossingData: CNCrossingData
 }
 
 function isEmptyOrSpaces(str: string | number | undefined) {

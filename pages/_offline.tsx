@@ -6,7 +6,7 @@ const CustomOffline = () => {
       <Head>
         <title>Offline</title>
       </Head>
-      <style jsx>{`
+      <style>{`
         .main {
           height: 100vh;
           display: flex;

@@ -42,7 +42,7 @@ function generateHeadingBorder(heading: string) {
 }
 
 interface HeadingElementProps {
-  heading: string
+  readonly heading: string
 }
 
 const HeadingElement = (props: HeadingElementProps) => {

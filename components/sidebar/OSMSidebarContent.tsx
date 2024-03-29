@@ -2,8 +2,8 @@ import GenericElement from './elements/GenericElement'
 
 interface OSMSidebarContentProps {
   /** Array of style options */
-  osmData: { name?: string; operator?: string; usage?: string; electrified?: string }
-  ringColor: string
+  readonly osmData: { name?: string; operator?: string; usage?: string; electrified?: string }
+  readonly ringColor: string
 }
 
 const OSMSidebarContent = (props: OSMSidebarContentProps) => {
